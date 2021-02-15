@@ -16,14 +16,13 @@ namespace HelloAsync
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            Button.Activated += async (s, e) => await Button_Activated(s, e);
+            Button.Activated += (s, e) => Button_Activated(s, e);
         }
 
-        private async Task Button_Activated(object sender, EventArgs e)
+        private void Button_Activated(object sender, EventArgs e)
         {
             Label.StringValue = "開始";
-            await AsyncVoidExceptions_CannotBeCaughtByCatch();
-            await Task.Run(() => HeavyMethod());
+            HeavyMethod();
             Label.StringValue = "完了";
         }
 
@@ -43,15 +42,15 @@ namespace HelloAsync
             }
         }
 
-        private async Task ThrowExceptionAsync()
+        private async void ThrowExceptionAsync()
         {
             throw new InvalidOperationException();
         }
-        public async Task AsyncVoidExceptions_CannotBeCaughtByCatch()
+        public void AsyncVoidExceptions_CannotBeCaughtByCatch()
         {
             try
             {
-                await ThrowExceptionAsync();
+                ThrowExceptionAsync();
             }
             catch (Exception)
             {
